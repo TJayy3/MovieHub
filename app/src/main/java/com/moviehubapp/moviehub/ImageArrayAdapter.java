@@ -2,7 +2,6 @@ package com.moviehubapp.moviehub;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +19,7 @@ public class ImageArrayAdapter extends ArrayAdapter {
 
     private Context context;
     private int layoutResID;
+    // Ignore This
     private List data = new ArrayList();
 
     public ImageArrayAdapter(Context context, int layoutResID, List data) {
@@ -34,39 +34,42 @@ public class ImageArrayAdapter extends ArrayAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
 
-        ImageView imageView;
+        ViewHolder holder;
 
         if (view == null) {
 
-            LayoutInflater inflater =  ((Activity) context).getLayoutInflater();
+            // Inflate New View
+            LayoutInflater inflater = ((Activity) context).getLayoutInflater();
             view = inflater.inflate(layoutResID, viewGroup, false);
-            imageView = (ImageView) view;
+
+            // Hold View's Reference So
+            // You Don't Have To Look
+            // For It Again
+            holder = new ViewHolder();
+            holder.poster = (ImageView) view.findViewById(R.id.single_poster_imageview);
+
+            // Tag Holder To View
+            view.setTag(holder);
 
         } else {
 
-            imageView = (ImageView) view;
+            // If View Is Already Created
+            // Get View's Tag
+            holder = (ViewHolder) view.getTag();
         }
 
-        // TEMP DATA
-        List<Bitmap> bitMappedPics = new ArrayList<>();
-
-        bitMappedPics.add(0, BitmapFactory.decodeResource(getContext().getResources(), R.drawable.sampleposter));
-        bitMappedPics.add(1, BitmapFactory.decodeResource(getContext().getResources(), R.drawable.sampleposter));
-        bitMappedPics.add(2, BitmapFactory.decodeResource(getContext().getResources(), R.drawable.sampleposter));
-        bitMappedPics.add(3, BitmapFactory.decodeResource(getContext().getResources(), R.drawable.sampleposter));
-        bitMappedPics.add(4, BitmapFactory.decodeResource(getContext().getResources(), R.drawable.sampleposter));
-        bitMappedPics.add(5, BitmapFactory.decodeResource(getContext().getResources(), R.drawable.sampleposter));
+        // Load Images To Be Displayed
+        holder.poster.setImageBitmap(BitmapFactory.decodeResource(
+                getContext().getResources(), R.drawable.sampleposter));
 
 
-        for (Bitmap bit : bitMappedPics) {
-
-            imageView.setImageBitmap(bit);
-
-        }
-
-
-
-        return imageView;
+        return view;
     }
 
+    // Holds View
+    static class ViewHolder {
+
+        ImageView poster;
+
+    }
 }

@@ -21,10 +21,10 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
+        // Load Up Posters
         GridView moviesGridView = (GridView) findViewById(R.id.movies_gridview);
         moviesGridView.setAdapter(new ImageArrayAdapter
-                (this, R.layout.single_poster_layout, Pics()));
+                (moviesGridView.getContext(), R.layout.single_poster_layout, Pics()));
     }
 
     @Override
@@ -53,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
     public List Pics() {
 
         List<Bitmap> bitMappedPics = new ArrayList<>();
-        List<Integer> tempPics = new ArrayList<>();
 
         bitMappedPics.add(0,BitmapFactory.decodeResource(getResources(),R.drawable.sample_2));
         bitMappedPics.add(1,BitmapFactory.decodeResource(getResources(),R.drawable.sample_3));
