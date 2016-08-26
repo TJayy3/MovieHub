@@ -1,18 +1,20 @@
 package com.moviehubapp.moviehub;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.GridView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+    private final String LOG_TAG = MainActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,11 +22,30 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        final Context context = this.getBaseContext();
 
-        // Load Up Posters
-        GridView moviesGridView = (GridView) findViewById(R.id.movies_gridview);
-        moviesGridView.setAdapter(new ImageArrayAdapter
-                (moviesGridView.getContext(), R.layout.single_poster_layout, Pics()));
+        final TMDbApi tmDbApi = new TMDbApi(new TMDbApi.onTaskCompleted() {
+            @Override
+            public void onTaskCompleted(List result) {
+
+                Log.v(LOG_TAG, "Background Thread Finished.");
+
+                RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+                Log.v(LOG_TAG, "Creating Adapter.");
+                ImageAdapter imageAdapter = new ImageAdapter(context, result);
+                recyclerView.setAdapter(imageAdapter);
+
+                GridLayoutManager gridLayout =
+                        new GridLayoutManager(context, 2);
+
+                recyclerView.setLayoutManager(gridLayout);
+                Log.v(LOG_TAG, "Adapter Finished Creation.");
+            }
+        });
+
+        tmDbApi.setPopular();
+        tmDbApi.execute();
+        Log.v(LOG_TAG, "Background Thread Executing.");
     }
 
     @Override
@@ -41,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
+        // no inspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
@@ -49,35 +70,5 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    // Temporary Images For Reference Grid Layout
-    public List Pics() {
 
-        List<Bitmap> bitMappedPics = new ArrayList<>();
-
-        bitMappedPics.add(0,BitmapFactory.decodeResource(getResources(),R.drawable.sample_2));
-        bitMappedPics.add(1,BitmapFactory.decodeResource(getResources(),R.drawable.sample_3));
-        bitMappedPics.add(2,BitmapFactory.decodeResource(getResources(),R.drawable.sample_4));
-        bitMappedPics.add(3,BitmapFactory.decodeResource(getResources(),R.drawable.sample_5));
-        bitMappedPics.add(4,BitmapFactory.decodeResource(getResources(),R.drawable.sample_6));
-        bitMappedPics.add(5,BitmapFactory.decodeResource(getResources(),R.drawable.sample_7));
-        bitMappedPics.add(6,BitmapFactory.decodeResource(getResources(),R.drawable.sample_0));
-        bitMappedPics.add(7,BitmapFactory.decodeResource(getResources(),R.drawable.sample_1));
-        bitMappedPics.add(8,BitmapFactory.decodeResource(getResources(),R.drawable.sample_2));
-        bitMappedPics.add(9,BitmapFactory.decodeResource(getResources(),R.drawable.sample_3));
-        bitMappedPics.add(10,BitmapFactory.decodeResource(getResources(),R.drawable.sample_4));
-        bitMappedPics.add(11,BitmapFactory.decodeResource(getResources(),R.drawable.sample_5));
-        bitMappedPics.add(12,BitmapFactory.decodeResource(getResources(),R.drawable.sample_6));
-        bitMappedPics.add(13,BitmapFactory.decodeResource(getResources(),R.drawable.sample_7));
-        bitMappedPics.add(14,BitmapFactory.decodeResource(getResources(),R.drawable.sample_0));
-        bitMappedPics.add(15,BitmapFactory.decodeResource(getResources(),R.drawable.sample_1));
-        bitMappedPics.add(16,BitmapFactory.decodeResource(getResources(),R.drawable.sample_2));
-        bitMappedPics.add(17,BitmapFactory.decodeResource(getResources(),R.drawable.sample_3));
-        bitMappedPics.add(18,BitmapFactory.decodeResource(getResources(),R.drawable.sample_4));
-        bitMappedPics.add(19,BitmapFactory.decodeResource(getResources(),R.drawable.sample_5));
-        bitMappedPics.add(20,BitmapFactory.decodeResource(getResources(),R.drawable.sample_6));
-        bitMappedPics.add(21,BitmapFactory.decodeResource(getResources(),R.drawable.sample_7));
-
-
-        return bitMappedPics;
-    }
 }

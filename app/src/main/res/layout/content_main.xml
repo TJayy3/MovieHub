@@ -6,13 +6,11 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".MainActivityFragment" >
+    tools:mContext=".MainActivityFragment" >
 
-    <GridView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/movies_gridview"
-        android:layout_gravity="center"
-        android:numColumns="auto_fit" />
+        android:layout_height="match_parent" />
 
 </RelativeLayout>
