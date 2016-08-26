@@ -20,11 +20,14 @@ public class ImageAdapter extends
 
     private Context mContext;
     private List<Movie> data;
+    private onPosterClickListener posterClicked;
 
-    public ImageAdapter(Context mContext, List data) {
+    public ImageAdapter(Context mContext, List data,
+                        onPosterClickListener posterClicked) {
 
         this.mContext = mContext;
         this.data = data;
+        this.posterClicked = posterClicked;
 
     }
 
@@ -33,11 +36,7 @@ public class ImageAdapter extends
 
         Movie movie = data.get(position);
 
-        ImageView moviePoster = viewHolder.poster;
-        moviePoster.setImageBitmap(data.get(position).getmMoviePosterBitmap());
-
-        TextView movieId = viewHolder.id;
-        movieId.setText(String.valueOf(movie.getmMovieId()));
+        viewHolder.bind(movie, posterClicked);
 
     }
 
@@ -53,7 +52,8 @@ public class ImageAdapter extends
         mContext = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(mContext);
 
-        View singlePosterLayout = inflater.inflate(R.layout.single_poster_layout, parent, false);
+        View singlePosterLayout = inflater
+                .inflate(R.layout.single_poster_layout, parent, false);
 
         ViewHolder viewHolder = new ViewHolder(singlePosterLayout);
 
@@ -72,5 +72,23 @@ public class ImageAdapter extends
             id = (TextView) itemView.findViewById(R.id.textview_movie_id);
         }
 
+        public void bind(final Movie movie,
+                         final onPosterClickListener posterClicked) {
+
+            poster.setImageBitmap(movie.getmMoviePosterBitmap());
+            id.setText(String.valueOf(movie.getmMovieId()));
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    posterClicked.onItemClick(id.getText().toString());
+                }
+            });
+        }
+    }
+
+    public interface onPosterClickListener {
+        void onItemClick(String movieId);
     }
 }

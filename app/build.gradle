@@ -20,7 +20,7 @@ android {
         buildTypes.each {
 
             it.buildConfigField "String", "THE_TMDb_API_KEY",
-                    "\"PLACE KEY IN HERE\""
+                    "\"\""
             // TODO ADD API KEY ABOVE ^
 
         }

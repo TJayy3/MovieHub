@@ -22,19 +22,19 @@ import java.util.Map;
  * Created by TeeJay on 8/16/2016.
  */
 
-public class TMDbApi extends AsyncTask<Void,Void,List> {
+public class GetIdsAndPosters extends AsyncTask<Void,Void,List> {
 
-    private final String LOG_TAG = TMDbApi.class.getSimpleName();
+    private final String LOG_TAG = GetIdsAndPosters.class.getSimpleName();
 
     private String mDefaultDataToFetch = "now_playing";
     private String mDataToFetch = null;
     private Map movieIdsAndPosters = null;
     private List<Movie> movieList = null;
-    private onTaskCompleted result = null;
+    private IdsAndPostersPulled result = null;
 
     Movie movie = new Movie();
 
-    public TMDbApi(onTaskCompleted result) {
+    public GetIdsAndPosters(IdsAndPostersPulled result) {
         this.result = result;
     }
 
@@ -79,7 +79,7 @@ public class TMDbApi extends AsyncTask<Void,Void,List> {
     protected void onPostExecute(List list) {
         super.onPostExecute(list);
         setMovieList(list);
-        result.onTaskCompleted(list);
+        result.IdsAndPostersPulled(list);
     }
 
     @Override
@@ -215,7 +215,7 @@ public class TMDbApi extends AsyncTask<Void,Void,List> {
         }
     }
 
-    public interface onTaskCompleted {
-        void onTaskCompleted(List result);
+    public interface IdsAndPostersPulled {
+        void IdsAndPostersPulled(List result);
     }
 }

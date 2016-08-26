@@ -1,6 +1,7 @@
 package com.moviehubapp.moviehub;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -24,15 +25,27 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         final Context context = this.getBaseContext();
 
-        final TMDbApi tmDbApi = new TMDbApi(new TMDbApi.onTaskCompleted() {
+        final GetIdsAndPosters getIdsAndPosters =
+                new GetIdsAndPosters(new GetIdsAndPosters.IdsAndPostersPulled() {
             @Override
-            public void onTaskCompleted(List result) {
+            public void IdsAndPostersPulled(List result) {
 
                 Log.v(LOG_TAG, "Background Thread Finished.");
 
                 RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
                 Log.v(LOG_TAG, "Creating Adapter.");
-                ImageAdapter imageAdapter = new ImageAdapter(context, result);
+
+                ImageAdapter imageAdapter = new ImageAdapter(context, result,
+                        new ImageAdapter.onPosterClickListener() {
+                    @Override
+                    public void onItemClick(String movieId) {
+
+                        Intent intent = new Intent(getBaseContext(), DetailActivity.class)
+                                .putExtra(Intent.EXTRA_TEXT, movieId);
+
+                        startActivity(intent);
+                    }
+                });
                 recyclerView.setAdapter(imageAdapter);
 
                 GridLayoutManager gridLayout =
@@ -43,8 +56,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        tmDbApi.setPopular();
-        tmDbApi.execute();
+        getIdsAndPosters.setPopular();
+        getIdsAndPosters.execute();
         Log.v(LOG_TAG, "Background Thread Executing.");
     }
 
