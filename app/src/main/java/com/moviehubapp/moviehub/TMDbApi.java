@@ -14,48 +14,96 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
 /**
  * Created by TeeJay on 8/16/2016.
  */
-public class TMDbApi extends AsyncTask<String, Void, String> {
+
+public class TMDbApi extends AsyncTask<Void,Void,List> {
 
     private final String LOG_TAG = TMDbApi.class.getSimpleName();
 
-    private String defaultDataToFetch = "now_playing";
-    private String dataToFetch = null;
+    private String mDefaultDataToFetch = "now_playing";
+    private String mDataToFetch = null;
+    private Map movieIdsAndPosters = null;
+    private List<Movie> movieList = null;
+    private onTaskCompleted result = null;
 
-    // Setter
-    private void setDataToFetch(String dataToFetch) {
-        this.dataToFetch = dataToFetch;
+    Movie movie = new Movie();
+
+    public TMDbApi(onTaskCompleted result) {
+        this.result = result;
     }
 
+    public void setMovieIdsAndPosters(Map movieIdsAndPosters) {
+        this.movieIdsAndPosters = movieIdsAndPosters;
+        Log.v(LOG_TAG, "Map Of Ids And Posters " + movieIdsAndPosters.toString());
+    }
+
+    public Map getMovieIdsAndPosters()
+    {return movieIdsAndPosters;}
+
+    public List getMovieList()
+    {return this.movieList;}
+
+    private void setMovieList(List<Movie> movieList) {
+        Log.v(LOG_TAG, "setMovieList: " + movieList);
+        this.movieList = movieList;
+    }
+
+    private void setmDataToFetch(String mDataToFetch)
+    {this.mDataToFetch = mDataToFetch;}
+
+    public void setNowPlaying() {
+
+        setmDataToFetch("now_playing");
+        Log.v(LOG_TAG, "Data To Fetch Set To Now Playing.");
+    }
+
+    public void setPopular() {
+
+        setmDataToFetch("popular");
+        Log.v(LOG_TAG, "Data To Fetch Set To Popular.");
+    }
+
+    public void setTopRated() {
+
+        setmDataToFetch("top_rated");
+        Log.v(LOG_TAG, "Data To Fetch Set To Top Rated.");
+    }
 
     @Override
-    protected String doInBackground(String... strings) {
+    protected void onPostExecute(List list) {
+        super.onPostExecute(list);
+        setMovieList(list);
+        result.onTaskCompleted(list);
+    }
+
+    @Override
+    protected List doInBackground(Void... params) {
 
         HttpURLConnection httpURLConnection = null;
         BufferedReader buffReader = null;
 
-        // Raw JSON Data To Be Pulled From Api
+        // Raw JSONData To Be Pulled From Api
         String pulledJSONData = null;
 
-        if (dataToFetch == null) {
+        if (mDataToFetch == null) {
 
-            setDataToFetch(defaultDataToFetch);
-            Log.v(LOG_TAG, "Data To Fetch Set To Default. 'Now Playing' ");
-
+            setmDataToFetch(mDefaultDataToFetch);
+            Log.v(LOG_TAG, "Data To Fetch Set To Default. 'NowPlaying'");
         }
 
         try {
 
             // Construct Url To Query
-            final String BASE_URL = "http://api.themoviedb.org/3";
-            final String CATEGORY_MOVIE = "/movie/";
-            final String DATA_TO_FETCH = dataToFetch;
-            final String MY_API_KEY = "?api_key=";
+            final String BASE_URL = "https://api.themoviedb.org/3";
+            final String CATEGORY_MOVIE = "movie";
+            final String DATA_TO_FETCH = mDataToFetch;
+            final String MY_API_KEY = "api_key";
 
             Uri builtUri = Uri.parse(BASE_URL).buildUpon()
                     .appendPath(CATEGORY_MOVIE)
@@ -64,7 +112,7 @@ public class TMDbApi extends AsyncTask<String, Void, String> {
                     .build();
 
             URL urlToApi = new URL(builtUri.toString());
-            Log.v(LOG_TAG, "Built URL " + builtUri.toString());
+            Log.v(LOG_TAG, "BuiltURL " + builtUri.toString());
 
             // Open Connection, And Request Api
             httpURLConnection = (HttpURLConnection) urlToApi.openConnection();
@@ -85,33 +133,30 @@ public class TMDbApi extends AsyncTask<String, Void, String> {
 
             while ((line = buffReader.readLine()) != null) {
 
-                // To Make Debugging Easier
-                // Can Print Out The Buffer
                 stringBuffer.append(line + "\n");
             }
 
+            // Stream Was Empty.
             if (stringBuffer.length() == 0) {
-                // Stream Was Empty.
                 return null;
             }
 
             pulledJSONData = stringBuffer.toString();
-            Log.v(LOG_TAG, "JSON Data Of " + dataToFetch + " Pulled: " + pulledJSONData);
+            Log.v(LOG_TAG, "JSONData Of " +
+                    "'" + mDataToFetch + "'" +
+                    " Pulled: " + pulledJSONData);
 
         } catch (IOException e) {
 
             e.printStackTrace();
             Log.d(LOG_TAG, "IOException Triggered.");
-
-            // If Error Occurred
-            // If Code Didn't Get Data
             return null;
 
         } finally {
 
             if (httpURLConnection != null) {
                 httpURLConnection.disconnect();
-                Log.v(LOG_TAG, "Disconnected The Connection.");
+                Log.v(LOG_TAG,"Disconnected The Connection.");
             }
 
             if (buffReader != null) {
@@ -126,43 +171,15 @@ public class TMDbApi extends AsyncTask<String, Void, String> {
             }
         }
 
-        return pulledJSONData;
+        setMovieIdsAndPosters(parseTMDbJSONData(pulledJSONData));
+        List list = movie.convertMapToMovieList(getMovieIdsAndPosters());
+
+        return list;
     }
-
-    // Returns NowPlaying Movies' Ids And Posters
-    // In A TreeMap
-    protected Map fetchNowPlaying() {
-
-        setDataToFetch("now_playing");
-        Log.v(LOG_TAG, "Data To Fetch Set To Now Playing.");
-
-        return parseTMDbJSONData(doInBackground());
-    }
-
-    // Returns Popular Movies' Ids And Posters
-    // In A TreeMap
-    protected Map fetchPopular() {
-
-        setDataToFetch("popular");
-        Log.v(LOG_TAG, "Data To Fetch Set To Popular.");
-
-        return parseTMDbJSONData(doInBackground());
-    }
-
-    // Returns TopRated Movies' Ids And Posters
-    // In A TreeMap
-    protected Map fetchTopRated() {
-
-        setDataToFetch("top_rated");
-        Log.v(LOG_TAG, "Data To Fetch Set To Top Rated.");
-
-        return parseTMDbJSONData(doInBackground());
-    }
-
 
     // Pulls Each Movie's Id And Poster
     // Throws Into TreeMap
-    protected Map parseTMDbJSONData(String pulledJSONData) {
+    private Map parseTMDbJSONData(String pulledJSONData) {
 
         // Data To Pull
         final String TMDb_RESULTS = "results";
@@ -170,21 +187,22 @@ public class TMDbApi extends AsyncTask<String, Void, String> {
         final String TMDb_POSTER_PATH = "poster_path";
 
         // Store Each Id And Poster
-        Map<Integer,String> movieIdAndPoster = new TreeMap<>();
+        Map<Integer,String> movieIdAndPoster = new LinkedHashMap<>();
 
         try {
 
             JSONObject jsonRootObject = new JSONObject(pulledJSONData);
             JSONArray resultsArray = jsonRootObject.optJSONArray(TMDb_RESULTS);
 
-            for (int i = 0; i <= resultsArray.length(); i++) {
+            for (int i = 0; i < resultsArray.length(); i++) {
 
                 JSONObject singleJSONObject = resultsArray.getJSONObject(i);
 
                 // Add Id Into Keys, Poster Into Values.
                 movieIdAndPoster.put(
                         Integer.parseInt(singleJSONObject.optString(TMDb_ID)),
-                        singleJSONObject.optString(TMDb_POSTER_PATH));
+                        // Substring Used To Remove '/' From Path.
+                        singleJSONObject.optString(TMDb_POSTER_PATH).substring(1));
             }
 
             return movieIdAndPoster;
@@ -197,4 +215,7 @@ public class TMDbApi extends AsyncTask<String, Void, String> {
         }
     }
 
+    public interface onTaskCompleted {
+        void onTaskCompleted(List result);
+    }
 }
