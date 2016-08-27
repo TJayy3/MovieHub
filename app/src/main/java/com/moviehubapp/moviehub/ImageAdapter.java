@@ -62,8 +62,8 @@ public class ImageAdapter extends
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        public ImageView poster;
-        public TextView id;
+        private ImageView poster;
+        private TextView id;
 
         public ViewHolder(View itemView) {
             super(itemView);

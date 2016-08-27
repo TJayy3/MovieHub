@@ -23,9 +23,8 @@ public class Movie {
 
     private final String LOG_TAG = Movie.class.getSimpleName();
 
-    private int mMovieId;
-    private String mMoviePosterPath;
-    private URL mMoviePosterUrl;
+    private int mMovieId, mMovieRuntime, mMovieRating;
+    private String mMovieDescription, mMovieTitle, mMovieReleaseDate;
     private Bitmap mMoviePosterBitmap;
 
     public Movie() {
@@ -38,23 +37,41 @@ public class Movie {
     public int getmMovieId()
     {return this.mMovieId;}
 
-    public void setmMoviePosterPath(String mMoviePosterPath)
-    {this.mMoviePosterPath = mMoviePosterPath;}
-
-    public String getmMoviePosterPath()
-    {return this.mMoviePosterPath;}
-
-    public void setmMoviePosterUrl(URL mMoviePosterUrl)
-    {this.mMoviePosterUrl = mMoviePosterUrl;}
-
-    public URL getmMoviePosterUrl()
-    {return mMoviePosterUrl;}
-
     public void setmMoviePosterBitmap(Bitmap mMoviePosterBitmap)
     {this.mMoviePosterBitmap = mMoviePosterBitmap;}
 
     public Bitmap getmMoviePosterBitmap()
     {return mMoviePosterBitmap;}
+
+    public String getmMovieTitle()
+    {return mMovieTitle;}
+
+    public void setmMovieTitle(String mMovieTitle)
+    {this.mMovieTitle = mMovieTitle;}
+
+    public String getmMovieDescription()
+    {return mMovieDescription;}
+
+    public void setmMovieDescription(String mMovieDescription)
+    {this.mMovieDescription = mMovieDescription;}
+
+    public String getmMovieReleaseDate()
+    {return mMovieReleaseDate;}
+
+    public void setmMovieReleaseDate(String mMovieReleaseDate)
+    {this.mMovieReleaseDate = mMovieReleaseDate;}
+
+    public int getmMovieRuntime()
+    {return mMovieRuntime;}
+
+    public void setmMovieRuntime(int mMovieRuntime)
+    {this.mMovieRuntime = mMovieRuntime;}
+
+    public int getmMovieRating()
+    {return mMovieRating;}
+
+    public void setmMovieRating(int mMovieRating)
+    {this.mMovieRating = mMovieRating;}
 
 
     // Takes Map Of Id And Poster Pairs
@@ -79,17 +96,10 @@ public class Movie {
             movie.setmMovieId(Integer.parseInt(mapEntry.getKey().toString()));
             Log.v(LOG_TAG, "PosterId: " + movie.getmMovieId());
 
-            // Set Poster With Value In Map
-            movie.setmMoviePosterPath(mapEntry.getValue().toString());
-            Log.v(LOG_TAG, "PosterPath: " + movie.getmMoviePosterPath());
-
-            // Creates And Set URL For Poster
-            movie.posterPathToURL(movie.getmMoviePosterPath());
-
-            // Creates And Set Bitmap For Poster
+            // Set Bitmap For Poster
             movie.setmMoviePosterBitmap(
                     getBitmapImageFromUrl(
-                            movie.getmMoviePosterUrl()));
+                            movie.posterPathToURL(mapEntry.getValue().toString())));
 
             // Add To List
             listOfMovies.add(index++,movie);
@@ -124,8 +134,6 @@ public class Movie {
 
             bitMap = BitmapFactory.decodeStream(buffIS);
 
-            setmMoviePosterBitmap(bitMap);
-
             inputStream.close();
             buffIS.close();
 
@@ -143,7 +151,7 @@ public class Movie {
     // Creates URL With
     // Specified Poster Path
     // Sets Url To Field
-    private void posterPathToURL(String posterPath) {
+    public URL posterPathToURL(String posterPath) {
 
         try {
 
@@ -159,12 +167,13 @@ public class Movie {
             URL posterUrl = new URL(builtUri.toString());
             Log.v(LOG_TAG, "Built Poster URL: " + posterUrl);
 
-            setmMoviePosterUrl(posterUrl);
+            return posterUrl;
 
         } catch (IOException e) {
 
             e.printStackTrace();
             Log.v(LOG_TAG, "IOException Triggered.");
+            return null;
         }
     }
 }

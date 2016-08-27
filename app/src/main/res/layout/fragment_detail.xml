@@ -18,16 +18,31 @@
     <TextView
         android:id="@+id/textview_detail_movie_movietitle"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imageview_detail_movie_poster"/>
 
     <TextView
         android:id="@+id/textview_detail_movie_releasedate"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textview_detail_movie_movietitle"/>
 
     <TextView
-        android:id="@+id/textview_detail_movie_userrating"
+        android:id="@+id/textview_detail_movie_rating"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textview_detail_movie_releasedate"/>
+
+    <TextView
+        android:id="@+id/textview_detail_movie_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textview_detail_movie_rating"/>
+
+    <TextView
+        android:id="@+id/textview_detail_movie_runtime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textview_detail_movie_description"/>
 
 </RelativeLayout>
