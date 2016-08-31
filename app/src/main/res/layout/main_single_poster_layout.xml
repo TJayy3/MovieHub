@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_centerInParent="true"
-    android:padding="@dimen/imageview_layout_padding"
+    android:padding="@dimen/main_poster_layout_padding"
     android:background="@color/colorPrimary" >
 
     <ImageView
@@ -12,9 +12,9 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:background="@color/colorPosterBoarder"
-        android:paddingLeft="7dp"
-        android:paddingRight="7dp" />
+        android:background="@color/colorPrimarySecond"
+        android:paddingLeft="@dimen/main_imageview_singleposter_padding"
+        android:paddingRight="@dimen/main_imageview_singleposter_padding" />
 
     <TextView
         android:id="@+id/textview_movie_id"

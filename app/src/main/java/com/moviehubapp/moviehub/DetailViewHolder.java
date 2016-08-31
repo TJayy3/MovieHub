@@ -29,7 +29,7 @@ public class DetailViewHolder extends RecyclerView.ViewHolder{
         movieRating = (TextView)
                 itemView.findViewById(R.id.textview_detail_movie_rating);
         movieDescription = (TextView)
-                itemView.findViewById(R.id.textview_detail_movie_description);
+                itemView.findViewById(R.id.textview_detail_movie_synopsis_info);
         movieRuntime = (TextView)
                 itemView.findViewById(R.id.textview_detail_movie_runtime);
     }

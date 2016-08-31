@@ -46,9 +46,6 @@ public class GetIdsAndPosters extends AsyncTask<Void,Void,List> {
     public Map getMovieIdsAndPosters()
     {return movieIdsAndPosters;}
 
-    public List getMovieList()
-    {return this.movieList;}
-
     private void setMovieList(List<Movie> movieList) {
         Log.v(LOG_TAG, "setMovieList: " + movieList);
         this.movieList = movieList;

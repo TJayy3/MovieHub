@@ -3,5 +3,6 @@
     <color name="colorPrimary">#673AB7</color>
     <color name="colorPrimaryDark">#212121</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="colorPosterBoarder">#7E57C2</color>
+    <color name="colorPrimarySecond">#7E57C2</color>
+    <color name="colorAppBackground">#212121</color>
 </resources>

@@ -28,7 +28,6 @@ public class ImageAdapter extends
         this.mContext = mContext;
         this.data = data;
         this.posterClicked = posterClicked;
-
     }
 
     @Override
@@ -37,7 +36,6 @@ public class ImageAdapter extends
         Movie movie = data.get(position);
 
         viewHolder.bind(movie, posterClicked);
-
     }
 
     @Override
@@ -53,7 +51,7 @@ public class ImageAdapter extends
         LayoutInflater inflater = LayoutInflater.from(mContext);
 
         View singlePosterLayout = inflater
-                .inflate(R.layout.single_poster_layout, parent, false);
+                .inflate(R.layout.main_single_poster_layout, parent, false);
 
         ViewHolder viewHolder = new ViewHolder(singlePosterLayout);
 
