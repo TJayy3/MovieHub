@@ -2,8 +2,14 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/colorPrimarySecond">
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/imageview_detail_movie_backdrop"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:adjustViewBounds="true"
+        android:alpha="0.8"/>
 
     <TextView
         android:id="@+id/textview_detail_movie_movietitle"
@@ -14,6 +20,8 @@
         android:textAllCaps="true"
         android:textSize="@dimen/detail_movie_title_size"
         android:textColor="#FFFF"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:shadowColor="#FFFF"
+        android:shadowRadius="10" />
 
 </RelativeLayout>

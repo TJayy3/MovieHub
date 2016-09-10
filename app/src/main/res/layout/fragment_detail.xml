@@ -10,25 +10,25 @@
     tools:showIn="@layout/activity_detail"
     android:scrollbars="none">
 
-        <LinearLayout
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include layout="@layout/detail_movie_title_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="@dimen/detail_movie_title_layout_height"
+            android:layout_marginBottom="3dp" />
 
-            <include layout="@layout/detail_movie_title_layout"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/detail_movie_title_layout_height"
-                android:layout_marginBottom="@dimen/detail_movie_parent_layout_margin"/>
+        <include layout="@layout/cardview_detail_movie_infoandposter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-            <include layout="@layout/cardview_detail_movie_infoandposter"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <include layout="@layout/cardview_detail_movie_synopsis"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/detail_movie_parent_layout_margin"
-                android:layout_marginBottom="@dimen/detail_movie_parent_layout_margin"/>
-        </LinearLayout>
+        <include layout="@layout/cardview_detail_movie_synopsis"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/detail_movie_parent_layout_margin"
+            android:layout_marginBottom="@dimen/detail_movie_parent_layout_margin"/>
+    </LinearLayout>
 
 </ScrollView>

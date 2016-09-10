@@ -130,11 +130,12 @@ public class FetchMovieInfo extends AsyncTask<Void,Void,Movie> {
         Movie movie = new Movie();
 
         final String MOVIE_DESCRIPTION = "overview";
-        final String MOVIE_TITLE = "original_title";
+        final String MOVIE_TITLE = "title";
         final String MOVIE_RELEASE_DATE = "release_date";
         final String MOVIE_POSTER_PATH = "poster_path";
         final String MOVIE_RUNTIME = "runtime";
         final String MOVIE_RATING = "vote_average";
+        final String MOVIE_BACKDROP_PATH = "backdrop_path";
 
         try {
 
@@ -146,17 +147,26 @@ public class FetchMovieInfo extends AsyncTask<Void,Void,Movie> {
             movie.setmMovieDescription(
                     jsonRootObject.optString(MOVIE_DESCRIPTION));
             movie.setmMovieReleaseDate(
-                    jsonRootObject.optString(MOVIE_RELEASE_DATE));
-            movie.setmMovieRuntime(
-                    jsonRootObject.optInt(MOVIE_RUNTIME));
+                    movie.dateFormat("MMMM yyyy", "yyyy-MM-dd",
+                            jsonRootObject.optString(MOVIE_RELEASE_DATE)));
+            movie.setmRuntimeHour(
+                    movie.hourFormat(
+                            jsonRootObject.optString(MOVIE_RUNTIME)));
+            movie.setmRunTimeMin(
+                    movie.minFormat(
+                            jsonRootObject.optString(MOVIE_RUNTIME)));
             movie.setmMovieRating(
-                    jsonRootObject.optInt(MOVIE_RATING));
+                    jsonRootObject.optDouble(MOVIE_RATING));
             movie.setmMovieId(
                     Integer.parseInt(movieId));
             movie.setmMoviePosterBitmap(
                     movie.getBitmapImageFromUrl(
-                            movie.posterPathToURL(
+                            movie.pathToURL(
                                     jsonRootObject.optString(MOVIE_POSTER_PATH).substring(1))));
+            movie.setmMovieBackDropBitmap(
+                    movie.getBitmapImageFromUrl(
+                            movie.pathToURL(
+                                    jsonRootObject.optString(MOVIE_BACKDROP_PATH).substring(1))));
 
         } catch (JSONException e) {
 

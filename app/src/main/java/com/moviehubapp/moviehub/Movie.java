@@ -10,9 +10,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.text.DateFormatSymbols;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -23,13 +27,33 @@ public class Movie {
 
     private final String LOG_TAG = Movie.class.getSimpleName();
 
-    private int mMovieId, mMovieRuntime, mMovieRating;
-    private String mMovieDescription, mMovieTitle, mMovieReleaseDate;
-    private Bitmap mMoviePosterBitmap;
+    private int mMovieId;
+    private double mMovieRating;
+    private String mMovieDescription, mMovieTitle, mMovieReleaseDate,
+            mRuntimeHour, mRunTimeMin;
+    private Bitmap mMoviePosterBitmap, mMovieBackDropBitmap;
 
     public Movie() {
 
     }
+
+    public Bitmap getmMovieBackDropBitmap()
+    {return mMovieBackDropBitmap;}
+
+    public void setmMovieBackDropBitmap(Bitmap mMovieBackDropBitmap)
+    {this.mMovieBackDropBitmap = mMovieBackDropBitmap;}
+
+    public String getmRunTimeMin()
+    {return mRunTimeMin;}
+
+    public void setmRunTimeMin(String mRunTimeMin)
+    {this.mRunTimeMin = mRunTimeMin;}
+
+    public String getmRuntimeHour()
+    {return mRuntimeHour;}
+
+    public void setmRuntimeHour(String mRuntimeHour)
+    {this.mRuntimeHour = mRuntimeHour;}
 
     public void setmMovieId(int mMovieId)
     {this.mMovieId = mMovieId;}
@@ -61,16 +85,10 @@ public class Movie {
     public void setmMovieReleaseDate(String mMovieReleaseDate)
     {this.mMovieReleaseDate = mMovieReleaseDate;}
 
-    public int getmMovieRuntime()
-    {return mMovieRuntime;}
-
-    public void setmMovieRuntime(int mMovieRuntime)
-    {this.mMovieRuntime = mMovieRuntime;}
-
-    public int getmMovieRating()
+    public double getmMovieRating()
     {return mMovieRating;}
 
-    public void setmMovieRating(int mMovieRating)
+    public void setmMovieRating(double mMovieRating)
     {this.mMovieRating = mMovieRating;}
 
 
@@ -99,7 +117,7 @@ public class Movie {
             // Set Bitmap For Poster
             movie.setmMoviePosterBitmap(
                     getBitmapImageFromUrl(
-                            movie.posterPathToURL(mapEntry.getValue().toString())));
+                            movie.pathToURL(mapEntry.getValue().toString())));
 
             // Add To List
             listOfMovies.add(index++,movie);
@@ -151,23 +169,23 @@ public class Movie {
     // Creates URL With
     // Specified Poster Path
     // Sets Url To Field
-    public URL posterPathToURL(String posterPath) {
+    public URL pathToURL(String stringPath) {
 
         try {
 
             final String BASE_URL = "http://image.tmdb.org/t/p/";
-            final String POSTER_SIZE = "w500";
-            final String POSTER_PATH = posterPath;
+            final String PATH_SIZE = "w500";
+            final String STRING_PATH = stringPath;
 
             Uri builtUri = Uri.parse(BASE_URL).buildUpon()
-                    .appendPath(POSTER_SIZE)
-                    .appendPath(POSTER_PATH)
+                    .appendPath(PATH_SIZE)
+                    .appendPath(STRING_PATH)
                     .build();
 
-            URL posterUrl = new URL(builtUri.toString());
-            Log.v(LOG_TAG, "Built Poster URL: " + posterUrl);
+            URL imageUrl = new URL(builtUri.toString());
+            Log.v(LOG_TAG, "Built Image URL: " + imageUrl);
 
-            return posterUrl;
+            return imageUrl;
 
         } catch (IOException e) {
 
@@ -175,5 +193,50 @@ public class Movie {
             Log.v(LOG_TAG, "IOException Triggered.");
             return null;
         }
+    }
+
+    // Format Release Date
+    // To Month/Year
+    public static String dateFormat(String targetPattern,
+                                    String currentPattern,
+                                    String valueToFormat) {
+
+        SimpleDateFormat targetFormat = new SimpleDateFormat();
+        SimpleDateFormat originalFormat = new SimpleDateFormat();
+        String formattedDate;
+
+        formattedDate = valueToFormat;
+        targetFormat.applyPattern(targetPattern);
+
+        DateFormatSymbols symbols = new DateFormatSymbols(Locale.getDefault());
+        symbols.setAmPmStrings(new String[] { "AM", "PM" });
+
+        targetFormat.setDateFormatSymbols(symbols);
+        originalFormat.applyPattern(currentPattern);
+
+        try {
+
+            formattedDate = targetFormat.format(originalFormat
+                    .parse(valueToFormat));
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return formattedDate;
+    }
+
+    public String hourFormat(String runtime) {
+
+        int hour = Integer.parseInt(runtime) / 60;
+
+        return String.valueOf(hour);
+    }
+
+    public String minFormat(String runtime) {
+
+        int min = Integer.parseInt(runtime) % 60;
+
+        return String.valueOf(min);
     }
 }

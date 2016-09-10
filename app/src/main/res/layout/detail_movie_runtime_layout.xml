@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/textview_detail_movie_runtime_hour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="23sp"
+        android:textStyle="bold"
+        android:textColor="@color/textColor"
+        android:drawableStart="@drawable/ic_detail_movie_runtime"
+        android:drawablePadding="5dp"/>
+
+    <TextView
+        android:id="@+id/textview_detail_movie_formattext_hour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:text="HR"
+        android:textSize="12sp"
+        android:textColor="@color/textColor"/>
+
+    <TextView
+        android:id="@+id/textview_detail_movie_runtime_min"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:textSize="23sp"
+        android:textStyle="bold"
+        android:textColor="@color/textColor"/>
+
+    <TextView
+        android:id="@+id/textview_detail_movie_formattext_min"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:text="MIN"
+        android:textSize="12sp"
+        android:textColor="@color/textColor"/>
+
+</LinearLayout>

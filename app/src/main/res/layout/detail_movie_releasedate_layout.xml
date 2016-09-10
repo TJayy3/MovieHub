@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/textview_detail_movie_releasedate"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:textStyle="bold"
+    android:textSize="23sp"
+    android:textColor="@color/textColor"
+    android:drawableStart="@drawable/ic_detail_movie_releasedate"
+    android:drawablePadding="5dp" />

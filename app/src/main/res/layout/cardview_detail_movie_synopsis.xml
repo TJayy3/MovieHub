@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp" />
 
-        <include layout="@layout/cardview_detail_movie_synopsis_info"
+        <include layout="@layout/detail_movie_synopsis_info_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="8dp" />

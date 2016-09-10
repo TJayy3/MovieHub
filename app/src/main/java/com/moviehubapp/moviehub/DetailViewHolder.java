@@ -8,19 +8,16 @@ import android.widget.TextView;
 /**
  * Created by TeeJay on 8/26/2016.
  */
-public class DetailViewHolder extends RecyclerView.ViewHolder{
+public class DetailViewHolder extends RecyclerView.ViewHolder {
 
-    private ImageView poster;
-    private TextView movieTitle;
-    private TextView movieReleaseDate;
-    private TextView movieRating;
-    private TextView movieDescription;
-    private TextView movieRuntime;
+    private ImageView moviePoster, movieBackDrop;
+    private TextView movieTitle, movieReleaseDate, movieRating,
+                     movieDescription, movieRuntimeHour, movieRuntimeMin;
 
     public DetailViewHolder(View itemView) {
         super(itemView);
 
-        poster = (ImageView)
+        moviePoster = (ImageView)
                 itemView.findViewById(R.id.imageview_detail_movie_poster);
         movieTitle = (TextView)
                 itemView.findViewById(R.id.textview_detail_movie_movietitle);
@@ -30,17 +27,23 @@ public class DetailViewHolder extends RecyclerView.ViewHolder{
                 itemView.findViewById(R.id.textview_detail_movie_rating);
         movieDescription = (TextView)
                 itemView.findViewById(R.id.textview_detail_movie_synopsis_info);
-        movieRuntime = (TextView)
-                itemView.findViewById(R.id.textview_detail_movie_runtime);
+        movieRuntimeHour = (TextView)
+                itemView.findViewById(R.id.textview_detail_movie_runtime_hour);
+        movieRuntimeMin = (TextView)
+                itemView.findViewById(R.id.textview_detail_movie_runtime_min);
+        movieBackDrop = (ImageView)
+                itemView.findViewById(R.id.imageview_detail_movie_backdrop);
     }
 
     public void set(Movie movie) {
 
-        poster.setImageBitmap(movie.getmMoviePosterBitmap());
+        moviePoster.setImageBitmap(movie.getmMoviePosterBitmap());
         movieTitle.setText(movie.getmMovieTitle());
         movieReleaseDate.setText(movie.getmMovieReleaseDate());
         movieRating.setText(String.valueOf(movie.getmMovieRating()));
         movieDescription.setText(movie.getmMovieDescription());
-        movieRuntime.setText(String.valueOf(movie.getmMovieRuntime()));
+        movieRuntimeHour.setText(String.valueOf(movie.getmRuntimeHour()));
+        movieRuntimeMin.setText(String.valueOf(movie.getmRunTimeMin()));
+        movieBackDrop.setImageBitmap(movie.getmMovieBackDropBitmap());
     }
 }
