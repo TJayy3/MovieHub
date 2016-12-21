@@ -32,10 +32,17 @@ public class Movie {
     private String mMovieDescription, mMovieTitle, mMovieReleaseDate,
             mRuntimeHour, mRunTimeMin;
     private Bitmap mMoviePosterBitmap, mMovieBackDropBitmap;
+    private List<MovieVideo> movieVids;
 
     public Movie() {
 
     }
+
+    public List<MovieVideo> getMovieVids()
+    {return movieVids;}
+
+    public void setMovieVids(List<MovieVideo> movieVids)
+    {this.movieVids = movieVids;}
 
     public Bitmap getmMovieBackDropBitmap()
     {return mMovieBackDropBitmap;}

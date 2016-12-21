@@ -16,7 +16,7 @@
         <item>2</item>
         <item>3</item>
     </string-array>
-    
+
     <string name="pref_filter_default_value">1</string>
 
     <string-array name="pref_filter_entries_listnames">

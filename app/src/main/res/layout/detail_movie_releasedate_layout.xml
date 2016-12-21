@@ -5,6 +5,6 @@
     android:layout_height="match_parent"
     android:textStyle="bold"
     android:textSize="23sp"
-    android:textColor="@color/textColor"
+    android:textColor="@color/textColor_BLACK"
     android:drawableStart="@drawable/ic_detail_movie_releasedate"
     android:drawablePadding="5dp" />

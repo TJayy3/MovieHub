@@ -6,4 +6,4 @@
     android:layout_height="match_parent"
     android:textSize="15sp"
     android:textStyle="bold|italic"
-    android:textColor="@color/textColor"/>
+    android:textColor="@color/textColor_BLACK"/>

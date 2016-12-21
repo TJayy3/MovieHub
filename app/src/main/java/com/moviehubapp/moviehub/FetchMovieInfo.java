@@ -53,17 +53,20 @@ public class FetchMovieInfo extends AsyncTask<Void,Void,Movie> {
         final String MOVIE_ID = getMovieId();
         final String MY_API_KEY = "api_key";
 
+        FetchMovieVids fetchMovieVids = new FetchMovieVids(getMovieId());
+        fetchMovieVids.run();
+
         try {
 
-            Uri builtUri = Uri.parse(BASE_URL).buildUpon()
+            Uri movieInfoUri = Uri.parse(BASE_URL).buildUpon()
                     .appendPath(MOVIE_ID)
                     .appendQueryParameter(MY_API_KEY, BuildConfig.THE_TMDb_API_KEY)
                     .build();
 
-            URL url = new URL(builtUri.toString());
-            Log.v(LOG_TAG, "BuiltURL: " + url.toString());
+            URL movieInfoUrl = new URL(movieInfoUri.toString());
+            Log.v(LOG_TAG, "BuiltURL: " + movieInfoUrl.toString());
 
-            httpURLConnection = (HttpURLConnection) url.openConnection();
+            httpURLConnection = (HttpURLConnection) movieInfoUrl.openConnection();
             httpURLConnection.setRequestMethod("GET");
             httpURLConnection.connect();
             Log.v(LOG_TAG, "Connected To Api.");
@@ -122,12 +125,12 @@ public class FetchMovieInfo extends AsyncTask<Void,Void,Movie> {
             }
         }
 
-        return parseJSONDataToMovie(pulledJSONData);
+        Movie movie = new Movie();
+
+        return fetchMovieVids.parseMovieVids(parseMovieInfo(pulledJSONData, movie));
     }
 
-    public Movie parseJSONDataToMovie(String pulledJSONData) {
-
-        Movie movie = new Movie();
+    public Movie parseMovieInfo(String pulledJSONData, Movie movie) {
 
         final String MOVIE_DESCRIPTION = "overview";
         final String MOVIE_TITLE = "title";

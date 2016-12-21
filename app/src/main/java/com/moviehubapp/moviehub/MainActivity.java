@@ -55,7 +55,9 @@ public class MainActivity extends AppCompatActivity {
 
                 Log.v(LOG_TAG, "Background Thread Finished.");
 
-                RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+                RecyclerView recyclerView = (RecyclerView)
+                        findViewById(R.id.recycler_view_main_movieposters);
+
                 Log.v(LOG_TAG, "Creating Adapter.");
                 ImageAdapter imageAdapter =
                         new ImageAdapter(

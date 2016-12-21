@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:textSize="23sp"
         android:textStyle="bold"
-        android:textColor="@color/textColor"
+        android:textColor="@color/textColor_BLACK"
         android:drawableStart="@drawable/ic_detail_movie_runtime"
         android:drawablePadding="5dp"/>
 
@@ -21,7 +21,7 @@
         android:layout_marginStart="2dp"
         android:text="HR"
         android:textSize="12sp"
-        android:textColor="@color/textColor"/>
+        android:textColor="@color/textColor_BLACK"/>
 
     <TextView
         android:id="@+id/textview_detail_movie_runtime_min"
@@ -30,7 +30,7 @@
         android:layout_marginStart="4dp"
         android:textSize="23sp"
         android:textStyle="bold"
-        android:textColor="@color/textColor"/>
+        android:textColor="@color/textColor_BLACK"/>
 
     <TextView
         android:id="@+id/textview_detail_movie_formattext_min"
@@ -39,6 +39,6 @@
         android:layout_marginStart="2dp"
         android:text="MIN"
         android:textSize="12sp"
-        android:textColor="@color/textColor"/>
+        android:textColor="@color/textColor_BLACK"/>
 
 </LinearLayout>

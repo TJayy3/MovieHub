@@ -6,10 +6,11 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/moviehub_ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
@@ -21,6 +22,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".DetailActivity"
             android:label="@string/title_activity_detail"
@@ -30,6 +32,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.moviehubapp.moviehub.MainActivity" />
         </activity>
+
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings"
@@ -38,6 +41,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.moviehubapp.moviehub.MainActivity" />
         </activity>
+
     </application>
 
 </manifest>

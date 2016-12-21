@@ -5,5 +5,5 @@
     <color name="colorAccent">#FF4081</color>
     <color name="colorPrimarySecond">#7E57C2</color>
     <color name="colorAppBackground">#212121</color>
-    <color name="textColor">#212121</color>
+    <color name="textColor_BLACK">#212121</color>
 </resources>

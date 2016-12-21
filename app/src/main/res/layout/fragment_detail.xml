@@ -1,4 +1,4 @@
-<ScrollView
+<android.support.v4.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -27,8 +27,13 @@
         <include layout="@layout/cardview_detail_movie_synopsis"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/detail_movie_parent_layout_margin" />
+
+        <include layout="@layout/cardview_detail_movie_videos"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
             android:layout_marginTop="@dimen/detail_movie_parent_layout_margin"
-            android:layout_marginBottom="@dimen/detail_movie_parent_layout_margin"/>
+            android:layout_marginBottom="@dimen/detail_movie_parent_layout_margin" />
     </LinearLayout>
 
-</ScrollView>
+</android.support.v4.widget.NestedScrollView>
