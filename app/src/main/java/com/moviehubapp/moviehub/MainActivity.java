@@ -36,8 +36,6 @@ import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
-    private final String LOG_TAG = MainActivity.class.getSimpleName();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,12 +51,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void IdsAndPostersPulled(List result) {
 
-                Log.v(LOG_TAG, "Background Thread Finished.");
-
                 RecyclerView recyclerView = (RecyclerView)
                         findViewById(R.id.recycler_view_main_movieposters);
 
-                Log.v(LOG_TAG, "Creating Adapter.");
                 ImageAdapter imageAdapter =
                         new ImageAdapter(
                                 context, result, new ImageAdapter.onPosterClickListener() {
@@ -82,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
                         new GridLayoutManager(context, 2);
 
                 recyclerView.setLayoutManager(gridLayout);
-                Log.v(LOG_TAG, "Adapter Finished Creation.");
             }
         });
 
@@ -100,7 +94,6 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         getIdsAndPosters.execute();
-        Log.v(LOG_TAG, "Background Thread Executing.");
     }
 
     @Override

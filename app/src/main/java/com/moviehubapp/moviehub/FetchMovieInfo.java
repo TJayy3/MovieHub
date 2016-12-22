@@ -2,7 +2,6 @@ package com.moviehubapp.moviehub;
 
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,12 +13,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-/**
- * Created by TeeJay on 8/26/2016.
- */
 public class FetchMovieInfo extends AsyncTask<Void,Void,Movie> {
-
-    private static final String LOG_TAG = FetchMovieInfo.class.getSimpleName();
 
     MovieInfoPulled result = null;
     private String movieId;
@@ -64,19 +58,15 @@ public class FetchMovieInfo extends AsyncTask<Void,Void,Movie> {
                     .build();
 
             URL movieInfoUrl = new URL(movieInfoUri.toString());
-            Log.v(LOG_TAG, "BuiltURL: " + movieInfoUrl.toString());
 
             httpURLConnection = (HttpURLConnection) movieInfoUrl.openConnection();
             httpURLConnection.setRequestMethod("GET");
             httpURLConnection.connect();
-            Log.v(LOG_TAG, "Connected To Api.");
 
             InputStream inputStream = httpURLConnection.getInputStream();
             StringBuffer stringBuffer = new StringBuffer();
 
             if (inputStream == null) {
-
-                Log.v(LOG_TAG, "InputStream Null.");
                 return null;
             }
 
@@ -95,20 +85,16 @@ public class FetchMovieInfo extends AsyncTask<Void,Void,Movie> {
             }
 
             pulledJSONData = stringBuffer.toString();
-            Log.v(LOG_TAG, "JSON Data Of MOVIE "
-                    + MOVIE_ID + "Pulled: \n" + pulledJSONData);
 
         } catch (IOException e) {
 
             e.printStackTrace();
-            Log.v(LOG_TAG, "IO Exception Triggered.");
 
         } finally {
 
             if (httpURLConnection != null) {
 
                 httpURLConnection.disconnect();
-                Log.v(LOG_TAG, "Disconnected.");
             }
 
             if (buffReader != null) {
@@ -119,7 +105,6 @@ public class FetchMovieInfo extends AsyncTask<Void,Void,Movie> {
 
                 } catch (IOException e) {
 
-                    Log.v(LOG_TAG, "BufferReader Didn't Close.");
                     e.printStackTrace();
                 }
             }
@@ -173,7 +158,6 @@ public class FetchMovieInfo extends AsyncTask<Void,Void,Movie> {
 
         } catch (JSONException e) {
 
-            Log.v(LOG_TAG, "JSON Exception Triggered.");
             e.printStackTrace();
         }
 

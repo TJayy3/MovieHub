@@ -10,13 +10,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
-/**
- * Created by TeeJay on 8/10/2016.
- */
 public class ImageAdapter extends
         RecyclerView.Adapter<ImageAdapter.ViewHolder> {
-
-    private final String LOG_TAG = ImageAdapter.class.getSimpleName();
 
     private Context mContext;
     private List<Movie> data;

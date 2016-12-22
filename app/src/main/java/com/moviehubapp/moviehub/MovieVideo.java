@@ -1,8 +1,5 @@
 package com.moviehubapp.moviehub;
 
-/**
- * Created by TeeJay on 9/17/2016.
- */
 public class MovieVideo {
 
     private String movieVidKey, movieVidName, movieVidType;
@@ -24,7 +21,5 @@ public class MovieVideo {
 
     public void setMovieVidType(String movieVidType)
     {this.movieVidType = movieVidType;}
-
-
 
 }

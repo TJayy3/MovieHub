@@ -17,13 +17,8 @@ import com.google.android.youtube.player.YouTubeThumbnailView;
 
 import java.util.List;
 
-/**
- * Created by TeeJay on 9/17/2016.
- */
 public class MovieVideosAdapter extends
         RecyclerView.Adapter<MovieVideosAdapter.ViewHolder> {
-
-    private static final String LOG_TAG = MovieVideosAdapter.class.getSimpleName();
 
     private Context mContext;
     private List<MovieVideo> movieVids;

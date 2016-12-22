@@ -2,7 +2,6 @@ package com.moviehubapp.moviehub;
 
 import android.net.Uri;
 import android.os.Process;
-import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -17,12 +16,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by TeeJay on 9/10/2016.
- */
 public class FetchMovieVids implements Runnable {
-
-    private final String LOG_TAG = FetchMovieVids.class.getSimpleName();
 
     private String pulledJSONData;
     private String movieId;
@@ -60,7 +54,6 @@ public class FetchMovieVids implements Runnable {
                     .build();
 
             URL movieVidsUrl = new URL(movieVidsUri.toString());
-            Log.v(LOG_TAG, "MovieVidsUrl BUILT URL " + movieVidsUrl);
 
             http = (HttpURLConnection) movieVidsUrl.openConnection();
             http.setRequestMethod("GET");
@@ -71,7 +64,7 @@ public class FetchMovieVids implements Runnable {
 
             if (inputStream == null) {
 
-                Log.v(LOG_TAG, "INPUT STREAM WAS EMPTY");
+                // INPUT STREAM WAS EMPTY
             }
 
             buffReader = new BufferedReader(new InputStreamReader(inputStream));
@@ -85,17 +78,12 @@ public class FetchMovieVids implements Runnable {
 
             if (sBuilder.length() == 0) {
 
-                Log.v(LOG_TAG, "STRING BUILDER WAS EMPTY");
+                // STRING BUILDER WAS EMPTY
             }
 
             pulledJSONData = sBuilder.toString();
-            Log.v(LOG_TAG, "MOVIE VIDEOS OF \n"
-                    + movieId
-                    + "\n MOVIE JSON DATA \n"
-                    + pulledJSONData);
 
             setJSONMovieVids(pulledJSONData);
-            Log.v(LOG_TAG, "FETCHMOVIEVIDS FINISHED.");
 
         } catch (IOException e) {
 
@@ -157,7 +145,6 @@ public class FetchMovieVids implements Runnable {
         } catch (JSONException e) {
 
             e.printStackTrace();
-            Log.v(LOG_TAG, "JSON EXCEPTION TRIGGERED.");
             return null;
         }
     }

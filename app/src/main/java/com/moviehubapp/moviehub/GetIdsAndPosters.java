@@ -2,7 +2,6 @@ package com.moviehubapp.moviehub;
 
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -18,13 +17,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by TeeJay on 8/16/2016.
- */
-
 public class GetIdsAndPosters extends AsyncTask<Void,Void,List> {
-
-    private final String LOG_TAG = GetIdsAndPosters.class.getSimpleName();
 
     private String mDefaultDataToFetch = "now_playing";
     private String mDataToFetch = null;
@@ -40,14 +33,12 @@ public class GetIdsAndPosters extends AsyncTask<Void,Void,List> {
 
     public void setMovieIdsAndPosters(Map movieIdsAndPosters) {
         this.movieIdsAndPosters = movieIdsAndPosters;
-        Log.v(LOG_TAG, "Map Of Ids And Posters " + movieIdsAndPosters.toString());
     }
 
     public Map getMovieIdsAndPosters()
     {return movieIdsAndPosters;}
 
     private void setMovieList(List<Movie> movieList) {
-        Log.v(LOG_TAG, "setMovieList: " + movieList);
         this.movieList = movieList;
     }
 
@@ -57,19 +48,16 @@ public class GetIdsAndPosters extends AsyncTask<Void,Void,List> {
     public void setNowPlaying() {
 
         setmDataToFetch("now_playing");
-        Log.v(LOG_TAG, "Data To Fetch Set To Now Playing.");
     }
 
     public void setPopular() {
 
         setmDataToFetch("popular");
-        Log.v(LOG_TAG, "Data To Fetch Set To Popular.");
     }
 
     public void setTopRated() {
 
         setmDataToFetch("top_rated");
-        Log.v(LOG_TAG, "Data To Fetch Set To Top Rated.");
     }
 
     @Override
@@ -91,7 +79,6 @@ public class GetIdsAndPosters extends AsyncTask<Void,Void,List> {
         if (mDataToFetch == null) {
 
             setmDataToFetch(mDefaultDataToFetch);
-            Log.v(LOG_TAG, "Data To Fetch Set To Default. 'NowPlaying'");
         }
 
         try {
@@ -109,13 +96,11 @@ public class GetIdsAndPosters extends AsyncTask<Void,Void,List> {
                     .build();
 
             URL urlToApi = new URL(builtUri.toString());
-            Log.v(LOG_TAG, "BuiltURL " + builtUri.toString());
 
             // Open Connection, And Request Api
             httpURLConnection = (HttpURLConnection) urlToApi.openConnection();
             httpURLConnection.setRequestMethod("GET");
             httpURLConnection.connect();
-            Log.v(LOG_TAG, "Connected To Api.");
 
             InputStream inputStream = httpURLConnection.getInputStream();
             StringBuffer stringBuffer = new StringBuffer();
@@ -139,21 +124,16 @@ public class GetIdsAndPosters extends AsyncTask<Void,Void,List> {
             }
 
             pulledJSONData = stringBuffer.toString();
-            Log.v(LOG_TAG, "JSONData Of " +
-                    "'" + mDataToFetch + "'" +
-                    " Pulled: " + pulledJSONData);
 
         } catch (IOException e) {
 
             e.printStackTrace();
-            Log.d(LOG_TAG, "IOException Triggered.");
             return null;
 
         } finally {
 
             if (httpURLConnection != null) {
                 httpURLConnection.disconnect();
-                Log.v(LOG_TAG,"Disconnected The Connection.");
             }
 
             if (buffReader != null) {
@@ -163,7 +143,6 @@ public class GetIdsAndPosters extends AsyncTask<Void,Void,List> {
 
                 } catch (IOException e) {
                     e.printStackTrace();
-                    Log.v(LOG_TAG, "Error Closing BufferedReader.");
                 }
             }
         }
@@ -207,7 +186,6 @@ public class GetIdsAndPosters extends AsyncTask<Void,Void,List> {
         } catch (JSONException e) {
 
             e.printStackTrace();
-            Log.v(LOG_TAG, "JSONException Triggered.");
             return null;
         }
     }

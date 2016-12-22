@@ -20,12 +20,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-/**
- * Created by TeeJay on 8/21/2016.
- */
 public class Movie {
-
-    private final String LOG_TAG = Movie.class.getSimpleName();
 
     private int mMovieId;
     private double mMovieRating;
@@ -119,7 +114,6 @@ public class Movie {
 
             // Set Id With Key In Map
             movie.setmMovieId(Integer.parseInt(mapEntry.getKey().toString()));
-            Log.v(LOG_TAG, "PosterId: " + movie.getmMovieId());
 
             // Set Bitmap For Poster
             movie.setmMoviePosterBitmap(
@@ -150,7 +144,6 @@ public class Movie {
 
             if (inputStream == null) {
 
-                Log.v(LOG_TAG, "InputStream Empty.");
                 return null;
             }
 
@@ -167,7 +160,6 @@ public class Movie {
         } catch (IOException e) {
 
             e.printStackTrace();
-            Log.v(LOG_TAG, "IOException Triggered.");
             return null;
         }
     }
@@ -190,14 +182,12 @@ public class Movie {
                     .build();
 
             URL imageUrl = new URL(builtUri.toString());
-            Log.v(LOG_TAG, "Built Image URL: " + imageUrl);
 
             return imageUrl;
 
         } catch (IOException e) {
 
             e.printStackTrace();
-            Log.v(LOG_TAG, "IOException Triggered.");
             return null;
         }
     }

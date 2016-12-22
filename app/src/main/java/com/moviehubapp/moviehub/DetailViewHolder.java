@@ -5,9 +5,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-/**
- * Created by TeeJay on 8/26/2016.
- */
 public class DetailViewHolder extends RecyclerView.ViewHolder {
 
     private ImageView moviePoster, movieBackDrop;
